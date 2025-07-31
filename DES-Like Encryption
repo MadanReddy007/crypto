@@ -1,0 +1,9 @@
+from Crypto.Cipher import DES
+from Crypto.Random import get_random_bytes
+
+key = b'8bytekey'  # DES key is 8 bytes
+cipher = DES.new(key, DES.MODE_ECB)
+plaintext = b'ABCDEFGH'
+ciphertext = cipher.encrypt(plaintext)
+print("Encrypted:", ciphertext)
+print("Decrypted:", cipher.decrypt(ciphertext))
