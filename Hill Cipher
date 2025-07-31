@@ -1,0 +1,19 @@
+import numpy as np
+
+def matrix_inverse_mod(mat, modulus):
+    det = int(round(np.linalg.det(mat)))
+    det_inv = pow(det, -1, modulus)
+    adj = np.round(det * np.linalg.inv(mat)).astype(int)
+    return (det_inv * adj) % modulus
+
+def decrypt_hill(ciphertext, key_matrix):
+    ciphertext = [ord(c) - ord('A') for c in ciphertext]
+    inverse_key = matrix_inverse_mod(key_matrix, 26)
+    result = ''
+    for i in range(0, len(ciphertext), 2):
+        pair = np.array(ciphertext[i:i+2])
+        plain = np.dot(inverse_key, pair) % 26
+        result += ''.join(chr(p + ord('A')) for p in plain)
+    return result
+
+# Simulated known-plaintext attack would extract the key matrix via algebra.
