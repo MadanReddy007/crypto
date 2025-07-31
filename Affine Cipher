@@ -1,0 +1,29 @@
+from collections import Counter
+
+def mod_inverse(a, m):
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return None
+
+def affine_decrypt(ciphertext, a, b):
+    a_inv = mod_inverse(a, 26)
+    if a_inv is None:
+        return "No modular inverse for key"
+    plaintext = ''
+    for char in ciphertext:
+        if char.isalpha():
+            offset = ord('A') if char.isupper() else ord('a')
+            p = (a_inv * ((ord(char) - offset - b)) % 26)
+            plaintext += chr(p + offset)
+        else:
+            plaintext += char
+    return plaintext
+
+# Try all a and b if needed (simple example)
+for a in range(1, 26, 2):  # affine 'a' must be odd and coprime to 26
+    if mod_inverse(a, 26):
+        for b in range(26):
+            guess = affine_decrypt("BU...", a, b)
+            if "THE" in guess:  # crude heuristic
+                print(f"a={a}, b={b}: {guess}")
