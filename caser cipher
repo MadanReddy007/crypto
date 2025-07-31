@@ -1,0 +1,16 @@
+def caesar_cipher(text, k):
+    result = ""
+    for char in text:
+        if char.isalpha():
+            shift = k % 26
+            base = ord('A') if char.isupper() else ord('a')
+            result += chr((ord(char) - base + shift) % 26 + base)
+        else:
+            result += char
+    return result
+
+# Example usage
+plaintext = "HELLO WORLD"
+key = 3
+ciphertext = caesar_cipher(plaintext, key)
+print("Caesar Cipher:", ciphertext)
