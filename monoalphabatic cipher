@@ -1,0 +1,19 @@
+import string
+
+def monoalphabetic_encrypt(plaintext, key_mapping):
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            base = 'A' if char.isupper() else 'a'
+            index = ord(char.lower()) - ord('a')
+            cipher_char = key_mapping[index]
+            ciphertext += cipher_char.upper() if char.isupper() else cipher_char
+        else:
+            ciphertext += char
+    return ciphertext
+
+# Example usage
+key = "QWERTYUIOPASDFGHJKLZXCVBNM"  # Example monoalphabetic key
+plaintext = "HELLO WORLD"
+ciphertext = monoalphabetic_encrypt(plaintext, key.lower())
+print("Monoalphabetic Cipher:", ciphertext)
