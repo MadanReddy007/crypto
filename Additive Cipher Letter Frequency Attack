@@ -1,0 +1,28 @@
+from collections import Counter
+
+def additive_decrypt(ciphertext, key):
+    plaintext = ''
+    for char in ciphertext:
+        if char.isalpha():
+            offset = ord('A') if char.isupper() else ord('a')
+            plaintext += chr((ord(char) - offset - key) % 26 + offset)
+        else:
+            plaintext += char
+    return plaintext
+
+def top_10_additive_decrypts(ciphertext):
+    english_freq = 'ETAOINSHRDLCUMWFGYPBVKJXQZ'
+    counts = Counter(ciphertext)
+    top_cipher_letters = [c for c, _ in counts.most_common() if c.isalpha()]
+    trials = []
+    for guess_char in top_cipher_letters[:3]:
+        for expected_char in english_freq[:3]:
+            key = (ord(guess_char.upper()) - ord(expected_char)) % 26
+            trials.append((key, additive_decrypt(ciphertext, key)))
+    trials.sort(key=lambda x: x[0])
+    return trials[:10]
+
+# Example usage
+# results = top_10_additive_decrypts("KHOOR ZRUOG")
+# for k, txt in results:
+#     print(f"Key {k}: {txt}")
