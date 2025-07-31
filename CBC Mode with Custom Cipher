@@ -1,0 +1,8 @@
+from math import gcd
+
+n = 77  # Example: n = p * q = 7 * 11
+cipher_block = 7  # This has a common factor with n
+common = gcd(cipher_block, n)
+if common != 1:
+    print(f"Found factor of n: {common}")
+    print(f"Other factor: {n // common}")
