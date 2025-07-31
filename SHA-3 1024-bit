@@ -1,0 +1,16 @@
+import random
+
+def simulate_sha3_lane_fill():
+    state = [[0] * 5 for _ in range(5)]
+    for x in range(5):
+        for y in range(4):  # First 4 rows (rate lanes)
+            state[x][y] = random.getrandbits(64)  # P0 has non-zero lanes
+    zero_lanes = [(x, y) for x in range(5) for y in [4]]
+    rounds = 0
+    while any(state[x][y] == 0 for x, y in zero_lanes):
+        rounds += 1
+        for x, y in zero_lanes:
+            state[x][y] = random.getrandbits(64)
+    return rounds
+
+print("Rounds until all capacity lanes filled:", simulate_sha3_lane_fill())
