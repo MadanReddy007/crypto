@@ -1,0 +1,24 @@
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+
+def encrypt_all_modes(data, key, iv):
+    block_size = 16
+    padded = pad(data + b'\x80' + b'\x00' * (block_size - 1), block_size)
+
+    # ECB
+    ecb = AES.new(key, AES.MODE_ECB)
+    print("ECB:", ecb.encrypt(padded).hex())
+
+    # CBC
+    cbc = AES.new(key, AES.MODE_CBC, iv)
+    print("CBC:", cbc.encrypt(padded).hex())
+
+    # CFB
+    cfb = AES.new(key, AES.MODE_CFB, iv)
+    print("CFB:", cfb.encrypt(padded).hex())
+
+key = b"1234567890abcdef"
+iv = b"iviviviviviviviv"
+message = b"HelloBlockWorld"
+
+encrypt_all_modes(message, key, iv)
