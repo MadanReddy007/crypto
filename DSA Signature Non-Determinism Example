@@ -1,0 +1,17 @@
+from Crypto.Signature import DSS
+from Crypto.Hash import SHA256
+from Crypto.PublicKey import DSA
+from Crypto.Random import get_random_bytes
+
+message = b"Sign this message"
+key = DSA.generate(1024)
+
+hash_obj = SHA256.new(message)
+signer = DSS.new(key, 'fips-186-3')
+
+sig1 = signer.sign(hash_obj)
+sig2 = signer.sign(SHA256.new(message))
+
+print("Signature 1:", sig1.hex())
+print("Signature 2:", sig2.hex())
+print("Are they equal?", sig1 == sig2)
