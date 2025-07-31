@@ -1,0 +1,5 @@
+from math import log2, factorial
+
+# 25! is total arrangements of A-Z without J
+key_space = factorial(25)
+print(f"Playfair Key Space ~ 25! ≈ 2^{log2(key_space):.2f}")
