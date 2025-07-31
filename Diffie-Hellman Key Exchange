@@ -1,0 +1,19 @@
+# Simple Diffie-Hellman Key Exchange
+def diffie_hellman(a, q, x, y):
+    A = pow(a, x, q)  # Alice sends A to Bob
+    B = pow(a, y, q)  # Bob sends B to Alice
+    shared_alice = pow(B, x, q)
+    shared_bob = pow(A, y, q)
+    return shared_alice, shared_bob
+
+# Public values
+a = 5   # public base
+q = 23  # public prime modulus
+
+# Secrets
+alice_secret = 6
+bob_secret = 15
+
+ka, kb = diffie_hellman(a, q, alice_secret, bob_secret)
+print("Shared key (Alice):", ka)
+print("Shared key (Bob):", kb)
