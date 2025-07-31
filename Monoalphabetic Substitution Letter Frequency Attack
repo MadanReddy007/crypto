@@ -1,0 +1,13 @@
+def frequency_attack(ciphertext):
+    cipher_freq = Counter(filter(str.isalpha, ciphertext.upper()))
+    freq_order = 'ETAOINSHRDLCUMWFGYPBVKJXQZ'
+    mapping = {}
+    for (c, _), f in zip(cipher_freq.most_common(), freq_order):
+        mapping[c] = f
+    result = ''
+    for char in ciphertext.upper():
+        result += mapping.get(char, char)
+    return result
+
+# Example
+print(frequency_attack("ZOLSS AOLYL"))
