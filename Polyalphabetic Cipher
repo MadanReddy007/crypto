@@ -1,0 +1,16 @@
+def vigenere_encrypt(plaintext, key):
+    ciphertext = ''
+    key = key.lower()
+    j = 0
+    for char in plaintext:
+        if char.isalpha():
+            offset = ord('A') if char.isupper() else ord('a')
+            k = ord(key[j % len(key)]) - ord('a')
+            ciphertext += chr((ord(char) - offset + k) % 26 + offset)
+            j += 1
+        else:
+            ciphertext += char
+    return ciphertext
+
+# Example
+print(vigenere_encrypt("HELLO WORLD", "KEY"))
